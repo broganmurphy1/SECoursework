@@ -38,7 +38,11 @@ namespace SECoursework___Euston_Message_Filtering_Service
                         {
                             if (Email.CheckEmailBodyLength(txt_MessageBody.Text) && (txt_MessageBody.Text != ""))
                             {
-                                
+                                if (Email.CheckIfURL(txt_MessageBody.Text))
+                                {
+                                    Email email = new Email(txt_MessageID.Text, txt_MessageBody.Text, txt_Sender.Text, txt_Subject.Text);
+                                    MessageBox.Show("")
+                                }
                             }
                         }
                         

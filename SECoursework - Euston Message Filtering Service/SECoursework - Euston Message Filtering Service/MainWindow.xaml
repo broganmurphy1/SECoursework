@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SECoursework___Euston_Message_Filtering_Service"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="1000">
     <Grid>
         <TextBox x:Name="txt_MessageID" HorizontalAlignment="Left" Height="24" Margin="135,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="btn_ProcessEmail" Content="Process as Email" HorizontalAlignment="Left" Margin="10,358,0,0" VerticalAlignment="Top" Width="108" Click="btn_ProcessEmail_Click_1" />
@@ -20,6 +20,8 @@
         <Button x:Name="btn_ProcessTweet" Content="Process as Tweet" HorizontalAlignment="Left" Margin="290,358,0,0" VerticalAlignment="Top" Width="108"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,145,0,0" TextWrapping="Wrap" Text="Enter Subject (If Email)" VerticalAlignment="Top" Height="20" Width="127"/>
         <TextBox x:Name="txt_Subject" HorizontalAlignment="Left" Height="23" Margin="135,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <ListBox x:Name="lst_Quarantine" HorizontalAlignment="Left" Height="114" Margin="488,51,0,0" VerticalAlignment="Top" Width="139"/>
+        <TextBlock HorizontalAlignment="Left" Margin="488,30,0,0" TextWrapping="Wrap" Text="Quarantine List" VerticalAlignment="Top" Height="16" Width="139"/>
 
     </Grid>
 </Window>
