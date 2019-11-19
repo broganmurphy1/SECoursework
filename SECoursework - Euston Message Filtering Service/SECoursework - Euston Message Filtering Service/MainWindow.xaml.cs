@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Text.RegularExpressions;
+
+namespace SECoursework___Euston_Message_Filtering_Service
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void btn_ProcessEmail_Click_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (Email.CheckID(txt_MessageID.Text) && (txt_MessageID.Text != ""))
+                {
+                    if (!Email.CheckEmailFormat(txt_Sender.Text) && (txt_Sender.Text != ""))
+                    {
+                        if(Email.CheckSubjectLength(txt_Subject.Text) && (txt_Subject.Text != ""))
+                        {
+                            if (Email.CheckEmailBodyLength(txt_MessageBody.Text) && (txt_MessageBody.Text != ""))
+                            {
+                                
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Please enter an input for all fields");
+            }
+        }
+    }
+}
