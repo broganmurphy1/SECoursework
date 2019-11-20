@@ -30,7 +30,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
         {
             try
             {
-                if (Email.CheckID(txt_MessageID.Text) && (txt_MessageID.Text != ""))
+                if (Email.CheckID(txt_MessageID.Text) && (txt_MessageID.Text != "") && (Regex.IsMatch(txt_MessageID.Text[0].ToString(), @"^[Ee]+$")))
                 {
                     if (Email.CheckEmailFormat(txt_Sender.Text) && (txt_Sender.Text != ""))
                     {

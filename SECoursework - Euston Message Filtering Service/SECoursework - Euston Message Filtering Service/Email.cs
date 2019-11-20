@@ -8,6 +8,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Windows.Shapes;
+using System.Windows.Forms;
 
 namespace SECoursework___Euston_Message_Filtering_Service
 {
@@ -57,7 +58,6 @@ namespace SECoursework___Euston_Message_Filtering_Service
 
         public static bool CheckIfURL (string body)
         {
-            string filePath = @"C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service";
             var regexEmail = new Regex(@"(http(s) ?://)?([\w-]+\.)+[\w-]+(/[\w- ;,./?%&=]*)?");
             List<string> quarantineList = new List<string>();
 
@@ -65,16 +65,16 @@ namespace SECoursework___Euston_Message_Filtering_Service
             {
                 var capturedUrl = regexEmail.Match(body).Groups[0].Value;
 
-                quarantineList.Add(capturedUrl + ",");
-                File.WriteAllLines(filePath, quarantineList);
-                
+                quarantineList.Add(capturedUrl);
+
+                MessageBox.Show(quarantineList.Count.ToString());
                 foreach (string s in quarantineList)
                 {
                     string[] url = s.Split(',');
                     for (int i = 0; i < quarantineList.Count; i++)
                     {
                         MainWindow window = new MainWindow();
-                        window.lst_Quarantine.Items.Add(capturedUrl);
+                        window.lst_Quarantine.Items.Add(url);
                     }
                 }
                 return true;
@@ -84,6 +84,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
                 return false;
             }
         }
+    
 
         public override string ToString()
         {

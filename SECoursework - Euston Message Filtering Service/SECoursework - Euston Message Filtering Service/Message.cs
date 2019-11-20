@@ -20,7 +20,9 @@ namespace SECoursework___Euston_Message_Filtering_Service
 
         public static bool CheckID(string id)
         {
-            if ((id.Length == 10) && (Regex.IsMatch(id[0].ToString(), @"^[a-zA-Z]+$") && (Regex.IsMatch(id.Substring(1, 9), "^[0-9]*$"))))
+            if ((id.Length == 10) && 
+                (Regex.IsMatch(id[0].ToString(), @"^[a-zA-Z]+$") 
+                && (Regex.IsMatch(id.Substring(1, 9), "^[0-9]*$"))))
             {
                 return true;
             }
