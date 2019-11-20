@@ -12,3 +12,17 @@ C:\Users\Brogan\Desktop\SECoursework - Euston Message Filtering Service\SECourse
 C:\Users\Brogan\Desktop\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework - Euston Message Filtering Service.csproj.GenerateResource.cache
 C:\Users\Brogan\Desktop\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework - Euston Message Filtering Service.exe
 C:\Users\Brogan\Desktop\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework - Euston Message Filtering Service.pdb
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework - Euston Message Filtering Service.csprojAssemblyReference.cache
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\MainWindow.g.cs
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\App.g.cs
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework - Euston Message Filtering Service_MarkupCompile.cache
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework - Euston Message Filtering Service_MarkupCompile.lref
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework - Euston Message Filtering Service.exe
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework - Euston Message Filtering Service.pdb
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\bin\Debug\SECoursework - Euston Message Filtering Service.exe.config
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\bin\Debug\SECoursework - Euston Message Filtering Service.exe
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\bin\Debug\SECoursework - Euston Message Filtering Service.pdb
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\MainWindow.baml
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework - Euston Message Filtering Service.g.resources
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework___Euston_Message_Filtering_Service.Properties.Resources.resources
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework - Euston Message Filtering Service.csproj.GenerateResource.cache

@@ -57,22 +57,24 @@ namespace SECoursework___Euston_Message_Filtering_Service
 
         public static bool CheckIfURL (string body)
         {
-            string filePath = @"..\..\..\..\..\QuarantineList.txt";
+            string filePath = @"C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service";
+            var regexEmail = new Regex(@"(http(s) ?://)?([\w-]+\.)+[\w-]+(/[\w- ;,./?%&=]*)?");
             List<string> quarantineList = new List<string>();
-            List<string> urlListFile = File.ReadAllLines(filePath).ToList();
-            string regexEmail = @"(((([a-z]|\d|-|.||~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'()*+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]).(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]).(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]).(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|.||~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))).)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))).?)(:\d*)?)(/((([a-z]|\d|-|.||~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'()*+,;=]|:|@)+(/(([a-z]|\d|-|.||~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'()*+,;=]|:|@)))?)?(\?((([a-z]|\d|-|.||~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'()*+,;=]|:|@)|[\uE000-\uF8FF]|/|\?)*)?(#((([a-z]|\d|-|.||~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'()*+,;=]|:|@)|/|\?)*)?$";
-            
-            if (body.Contains(regexEmail))
+
+            if (regexEmail.IsMatch(body))
             {
-                quarantineList.Add(body + ",");
+                var capturedUrl = regexEmail.Match(body).Groups[0].Value;
+
+                quarantineList.Add(capturedUrl + ",");
                 File.WriteAllLines(filePath, quarantineList);
-                foreach (string s in urlListFile)
+                
+                foreach (string s in quarantineList)
                 {
                     string[] url = s.Split(',');
-                    for (int i = 0; i < urlListFile.Count; i++)
+                    for (int i = 0; i < quarantineList.Count; i++)
                     {
                         MainWindow window = new MainWindow();
-                        window.lst_Quarantine.Items.Add(url);
+                        window.lst_Quarantine.Items.Add(capturedUrl);
                     }
                 }
                 return true;
@@ -83,6 +85,9 @@ namespace SECoursework___Euston_Message_Filtering_Service
             }
         }
 
-        public
+        public override string ToString()
+        {
+            return string.Format("{0}, {1}, {2}, {3}", MessageID, Sender, Subject, MessageBody);
+        }
     }
 }

@@ -26,27 +26,42 @@ namespace SECoursework___Euston_Message_Filtering_Service
             InitializeComponent();
         }
 
-        private void btn_ProcessEmail_Click_1(object sender, RoutedEventArgs e)
+        private void btn_ProcessEmail_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (Email.CheckID(txt_MessageID.Text) && (txt_MessageID.Text != ""))
                 {
-                    if (!Email.CheckEmailFormat(txt_Sender.Text) && (txt_Sender.Text != ""))
+                    if (Email.CheckEmailFormat(txt_Sender.Text) && (txt_Sender.Text != ""))
                     {
-                        if(Email.CheckSubjectLength(txt_Subject.Text) && (txt_Subject.Text != ""))
+                        if (Email.CheckSubjectLength(txt_Subject.Text) && (txt_Subject.Text != ""))
                         {
                             if (Email.CheckEmailBodyLength(txt_MessageBody.Text) && (txt_MessageBody.Text != ""))
                             {
                                 if (Email.CheckIfURL(txt_MessageBody.Text))
                                 {
                                     Email email = new Email(txt_MessageID.Text, txt_MessageBody.Text, txt_Sender.Text, txt_Subject.Text);
-                                    MessageBox.Show("")
+                                    MessageBox.Show(email.ToString());
                                 }
                             }
+                            else
+                            {
+                                MessageBox.Show("Body must be under 1028 characters and not empty");
+                            }
                         }
-                        
+                        else
+                        {
+                            MessageBox.Show("Subject must be under twenty characters and not empty");
+                        }
                     }
+                    else
+                    {
+                        MessageBox.Show("Email not in correct format");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("ID not in correct format, must be 'E' following with nine numbers");
                 }
             }
             catch

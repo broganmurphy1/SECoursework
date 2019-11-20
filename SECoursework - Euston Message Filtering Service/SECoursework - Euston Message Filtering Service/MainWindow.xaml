@@ -8,7 +8,7 @@
         Title="MainWindow" Height="500" Width="1000">
     <Grid>
         <TextBox x:Name="txt_MessageID" HorizontalAlignment="Left" Height="24" Margin="135,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="btn_ProcessEmail" Content="Process as Email" HorizontalAlignment="Left" Margin="10,358,0,0" VerticalAlignment="Top" Width="108" Click="btn_ProcessEmail_Click_1" />
+        <Button x:Name="btn_ProcessEmail" Content="Process as Email" HorizontalAlignment="Left" Margin="10,358,0,0" VerticalAlignment="Top" Width="108" Click="btn_ProcessEmail_Click" />
         <TextBlock HorizontalAlignment="Left" Margin="10,51,0,0" TextWrapping="Wrap" Text="Enter Message ID here
                    " VerticalAlignment="Top" Width="127"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,192,0,0" TextWrapping="Wrap" Text="Enter Message body" VerticalAlignment="Top" Height="22" Width="127"/>
