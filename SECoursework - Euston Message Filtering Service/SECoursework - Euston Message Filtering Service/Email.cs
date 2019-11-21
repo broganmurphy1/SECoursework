@@ -16,7 +16,6 @@ namespace SECoursework___Euston_Message_Filtering_Service
     {
         public string Sender { get; set; }
         public string Subject { get; set; }
-        
         public Email (string messageid, string messagebody, string sender, string subject) : base (messageid, messagebody)
         {
             Sender = sender;
@@ -58,31 +57,38 @@ namespace SECoursework___Euston_Message_Filtering_Service
 
         public static bool CheckIfURL (string body)
         {
-            var regexEmail = new Regex(@"(http(s) ?://)?([\w-]+\.)+[\w-]+(/[\w- ;,./?%&=]*)?");
             List<string> quarantineList = new List<string>();
 
-            if (regexEmail.IsMatch(body))
+            foreach(string url in body.Split(' '))
             {
-                var capturedUrl = regexEmail.Match(body).Groups[0].Value;
-
-                quarantineList.Add(capturedUrl);
-
-                MessageBox.Show(quarantineList.Count.ToString());
-                foreach (string s in quarantineList)
+                if (url.EndsWith(".com"))
                 {
-                    string[] url = s.Split(',');
-                    for (int i = 0; i < quarantineList.Count; i++)
-                    {
-                        MainWindow window = new MainWindow();
-                        window.lst_Quarantine.Items.Add(url);
-                    }
+                    quarantineList.Add(url);
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.lst_Quarantine.Items.Add(url);
+                    return true;
                 }
-                return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
+
+            //if (regexEmail.IsMatch(body))
+            //{
+            //    var urlFromText = regexEmail.Match(body).Groups[0].Value;
+
+            //    string foundUrl = "~" + urlFromText + "~";
+
+            //    foreach (string url in body.Split('~'))
+            //    {
+            //        quarantineList.Add(url);
+            //        MainWindow window = new MainWindow();
+            //        window.lst_Quarantine.Items.Add(url);
+            //    }
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
         }
     
 
