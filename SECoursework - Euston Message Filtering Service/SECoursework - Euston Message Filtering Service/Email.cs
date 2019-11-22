@@ -55,46 +55,27 @@ namespace SECoursework___Euston_Message_Filtering_Service
             }
         }
 
-        public static bool CheckIfURL (string body)
+        public static void CheckIfURL (string body, ref List<string> qList)
         {
-            List<string> quarantineList = new List<string>();
-
-            foreach(string url in body.Split(' '))
+            MainWindow mainWindow = new MainWindow();
+            
+            foreach (string url in body.Split(' '))
             {
-                if (url.EndsWith(".com"))
+                if (Regex.IsMatch(url, @"(http(s) ?://)?([\w-]+\.)+[\w-]+(/[\w- ;,./?%&=]*)?"))
                 {
-                    quarantineList.Add(url);
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.lst_Quarantine.Items.Add(url);
-                    return true;
-                }
+                    qList.Add(url);
+                }            
             }
-            return false;
-
-            //if (regexEmail.IsMatch(body))
-            //{
-            //    var urlFromText = regexEmail.Match(body).Groups[0].Value;
-
-            //    string foundUrl = "~" + urlFromText + "~";
-
-            //    foreach (string url in body.Split('~'))
-            //    {
-            //        quarantineList.Add(url);
-            //        MainWindow window = new MainWindow();
-            //        window.lst_Quarantine.Items.Add(url);
-            //    }
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
+            foreach (string link in qList)
+            {
+                string replaceUrl = body.Replace(link, "< URL Quarantined >");
+                body = replaceUrl;
+            }
         }
-    
 
         public override string ToString()
         {
-            return string.Format("{0}, {1}, {2}, {3}", MessageID, Sender, Subject, MessageBody);
+            return string.Format("{0}, \n{1}, \n{2}, \n{3}", MessageID, Sender, Subject, MessageBody);
         }
     }
 }

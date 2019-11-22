@@ -20,7 +20,8 @@ namespace SECoursework___Euston_Message_Filtering_Service
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    { 
+    {
+        public List<string> quarantineList = new List<string>();
         public MainWindow()
         {
             InitializeComponent();
@@ -38,9 +39,11 @@ namespace SECoursework___Euston_Message_Filtering_Service
                         {
                             if (Email.CheckEmailBodyLength(txt_MessageBody.Text) && (txt_MessageBody.Text != ""))
                             {
-                                Email.CheckIfURL(txt_MessageBody.Text);
+                                lst_Quarantine.Items.Clear();
+                                quarantineList.Clear();
+                                Email.CheckIfURL(txt_MessageBody.Text, ref quarantineList);
                                 Email email = new Email(txt_MessageID.Text, txt_MessageBody.Text, txt_Sender.Text, txt_Subject.Text);
-                                MessageBox.Show(email.ToString());
+
                             }
                             else
                             {
@@ -65,6 +68,15 @@ namespace SECoursework___Euston_Message_Filtering_Service
             catch
             {
                 MessageBox.Show("Please enter an input for all fields");
+            }
+
+            foreach (string link in quarantineList)
+            {
+                lst_Quarantine.Items.Add(link);
+            }
+            foreach(string m in quarantineList)
+            {
+                MessageBox.Show(m);
             }
         }
     }
