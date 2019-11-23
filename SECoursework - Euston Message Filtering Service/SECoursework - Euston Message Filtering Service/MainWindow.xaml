@@ -15,13 +15,15 @@
         <TextBox x:Name="txt_MessageBody" HorizontalAlignment="Left" Height="128" Margin="135,192,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="263"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,95,0,0" TextWrapping="Wrap" Text="Enter Sender
                    " VerticalAlignment="Top" Width="127"/>
-        <TextBox x:Name="txt_Sender" HorizontalAlignment="Left" Height="23" Margin="137,95,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="261"/>
+        <TextBox x:Name="txt_Sender" HorizontalAlignment="Left" Height="23" Margin="135,95,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="261"/>
         <Button x:Name="btn_ProcessSMS" Content="Process as SMS" HorizontalAlignment="Left" Margin="147,358,0,0" VerticalAlignment="Top" Width="108"/>
         <Button x:Name="btn_ProcessTweet" Content="Process as Tweet" HorizontalAlignment="Left" Margin="290,358,0,0" VerticalAlignment="Top" Width="108"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,145,0,0" TextWrapping="Wrap" Text="Enter Subject (If Email)" VerticalAlignment="Top" Height="20" Width="127"/>
         <TextBox x:Name="txt_Subject" HorizontalAlignment="Left" Height="23" Margin="135,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <ListBox x:Name="lst_Quarantine" HorizontalAlignment="Left" Height="114" Margin="488,51,0,0" VerticalAlignment="Top" Width="139"/>
+        <ListBox x:Name="lst_Quarantine" HorizontalAlignment="Left" Height="114" Margin="488,51,0,0" VerticalAlignment="Top" Width="177"/>
         <TextBlock HorizontalAlignment="Left" Margin="488,30,0,0" TextWrapping="Wrap" Text="Quarantine List" VerticalAlignment="Top" Height="16" Width="139"/>
+        <TextBox x:Name="txt_ViewMessages" HorizontalAlignment="Left" Height="128" Margin="448,192,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="261"/>
+        <Button x:Name="btn_View" Content="View Messages" HorizontalAlignment="Left" Margin="448,358,0,0" VerticalAlignment="Top" Width="93"/>
 
     </Grid>
 </Window>

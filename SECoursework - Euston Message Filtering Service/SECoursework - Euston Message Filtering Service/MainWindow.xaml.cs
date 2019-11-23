@@ -13,6 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+using Newtonsoft.Json;
 
 namespace SECoursework___Euston_Message_Filtering_Service
 {
@@ -22,6 +26,8 @@ namespace SECoursework___Euston_Message_Filtering_Service
     public partial class MainWindow : Window
     {
         public List<string> quarantineList = new List<string>();
+        MemoryStream memorystream1 = new MemoryStream();
+        string filePath = @"\..\..\..\..\JSONSave.txt";
         public MainWindow()
         {
             InitializeComponent();
@@ -29,8 +35,8 @@ namespace SECoursework___Euston_Message_Filtering_Service
 
         private void btn_ProcessEmail_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 if (Email.CheckID(txt_MessageID.Text) && (txt_MessageID.Text != "") && (Regex.IsMatch(txt_MessageID.Text[0].ToString(), @"^[Ee]+$")))
                 {
                     if (Email.CheckEmailFormat(txt_Sender.Text) && (txt_Sender.Text != ""))
@@ -41,9 +47,14 @@ namespace SECoursework___Euston_Message_Filtering_Service
                             {
                                 lst_Quarantine.Items.Clear();
                                 quarantineList.Clear();
+                                
                                 Email.CheckIfURL(txt_MessageBody.Text, ref quarantineList);
-                                Email email = new Email(txt_MessageID.Text, txt_MessageBody.Text, txt_Sender.Text, txt_Subject.Text);
 
+                                Email email = new Email(txt_MessageID.Text, txt_MessageBody.Text, txt_Sender.Text, txt_Subject.Text);
+                                
+                                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Email));
+                                serializer.WriteObject(memorystream1, email);
+                                File.WriteAllText(filePath, JsonConvert.SerializeObject(email));
                             }
                             else
                             {
@@ -64,19 +75,19 @@ namespace SECoursework___Euston_Message_Filtering_Service
                 {
                     MessageBox.Show("ID not in correct format, must be 'E' following with nine numbers");
                 }
-            }
-            catch
-            {
-                MessageBox.Show("Please enter an input for all fields");
-            }
+            //}
+            ////catch
+            ////{
+            ////    MessageBox.Show("Please enter an input for all fields");
+            ////}
 
             foreach (string link in quarantineList)
             {
                 lst_Quarantine.Items.Add(link);
             }
-            foreach(string m in quarantineList)
+            foreach (string url in quarantineList)
             {
-                MessageBox.Show(m);
+                string urlreplaced = url.Replace(url, "<URL Quarantined>");
             }
         }
     }

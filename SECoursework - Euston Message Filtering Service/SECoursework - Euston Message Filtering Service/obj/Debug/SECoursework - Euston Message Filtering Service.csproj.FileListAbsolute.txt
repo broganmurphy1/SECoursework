@@ -26,3 +26,6 @@ C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\
 C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework - Euston Message Filtering Service.g.resources
 C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework___Euston_Message_Filtering_Service.Properties.Resources.resources
 C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework - Euston Message Filtering Service.csproj.GenerateResource.cache
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Brogan\Desktop\CloneSE\SECoursework - Euston Message Filtering Service\SECoursework - Euston Message Filtering Service\obj\Debug\SECoursework - Euston Message Filtering Service.csproj.CopyComplete

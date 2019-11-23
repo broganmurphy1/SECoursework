@@ -12,9 +12,12 @@ using System.Windows.Forms;
 
 namespace SECoursework___Euston_Message_Filtering_Service
 {
+    [DataContract]
     public class Email : Message
     {
+        [DataMember]
         public string Sender { get; set; }
+        [DataMember]
         public string Subject { get; set; }
         public Email (string messageid, string messagebody, string sender, string subject) : base (messageid, messagebody)
         {

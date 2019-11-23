@@ -4,12 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Runtime.Serialization.Json;
+using System.Runtime.Serialization;
+
 
 namespace SECoursework___Euston_Message_Filtering_Service
 {
+    [DataContract]
     public class Message
     {
+        [DataMember]
         public string MessageID { get; set; }
+        [DataMember]
         public string MessageBody { get; set; }
 
         public Message(string messageid, string messagebody)
