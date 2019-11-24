@@ -27,7 +27,8 @@ namespace SECoursework___Euston_Message_Filtering_Service
     {
         public List<string> quarantineList = new List<string>();
         MemoryStream memorystream1 = new MemoryStream();
-        string filePath = @"\..\..\..\..\JSONSave.txt";
+        string filePath = @"E:\Uni\JSONSave.txt";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,8 +36,8 @@ namespace SECoursework___Euston_Message_Filtering_Service
 
         private void btn_ProcessEmail_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 if (Email.CheckID(txt_MessageID.Text) && (txt_MessageID.Text != "") && (Regex.IsMatch(txt_MessageID.Text[0].ToString(), @"^[Ee]+$")))
                 {
                     if (Email.CheckEmailFormat(txt_Sender.Text) && (txt_Sender.Text != ""))
@@ -50,11 +51,14 @@ namespace SECoursework___Euston_Message_Filtering_Service
                                 
                                 Email.CheckIfURL(txt_MessageBody.Text, ref quarantineList);
 
-                                Email email = new Email(txt_MessageID.Text, txt_MessageBody.Text, txt_Sender.Text, txt_Subject.Text);
-                                
-                                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Email));
-                                serializer.WriteObject(memorystream1, email);
-                                File.WriteAllText(filePath, JsonConvert.SerializeObject(email));
+                                List<Email> email = new List<Email>();
+                                email.Add(new Email(txt_MessageID.Text, txt_MessageBody.Text, txt_Sender.Text, txt_Subject.Text));
+
+                                string json = JsonConvert.SerializeObject(email.ToArray());
+
+                                File.AppendAllText(filePath, json + Environment.NewLine);
+                                MessageBox.Show("Email added");
+                                clearTextBoxes();
                             }
                             else
                             {
@@ -75,11 +79,11 @@ namespace SECoursework___Euston_Message_Filtering_Service
                 {
                     MessageBox.Show("ID not in correct format, must be 'E' following with nine numbers");
                 }
-            //}
-            ////catch
-            ////{
-            ////    MessageBox.Show("Please enter an input for all fields");
-            ////}
+        }
+            catch
+            {
+                MessageBox.Show("Please enter an input for all fields");
+            }
 
             foreach (string link in quarantineList)
             {
@@ -89,6 +93,51 @@ namespace SECoursework___Euston_Message_Filtering_Service
             {
                 string urlreplaced = url.Replace(url, "<URL Quarantined>");
             }
+        }
+
+        private void btn_View_Click(object sender, RoutedEventArgs e)
+        {
+            //lst_DisplayMessages.Items.Clear();
+            List<Email> Emails = new List<Email>();
+            List<string> JSONMessageList = File.ReadAllLines(filePath).ToList();
+            foreach (string message in JSONMessageList)
+            {
+                string[] splitMessages = message.Split(',');
+
+                Email email = new Email(splitMessages[2], splitMessages[0], splitMessages[1], splitMessages[3]);
+
+                Emails.Add(email);
+
+                foreach (Email emailMessage in Emails)
+                {
+                    lst_DisplayMessages.Items.Add(emailMessage.ToString());
+                }
+            }
+        }
+
+        private void btn_DeleteMessage_Click(object sender, RoutedEventArgs e)
+        {
+            if (lst_DisplayMessages.SelectedIndex > -1)
+            {
+                lst_DisplayMessages.Items.RemoveAt(lst_DisplayMessages.SelectedIndex);
+                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                {
+                    using (TextWriter tw = new StreamWriter(fs))
+                        foreach (var item in lst_DisplayMessages.Items)
+                            tw.WriteLine(item);
+                }
+            }
+
+            if (lst_DisplayMessages.SelectedIndex >= 0)
+                lst_DisplayMessages.Items.RemoveAt(lst_DisplayMessages.SelectedIndex);
+        }
+
+        private void clearTextBoxes()
+        {
+            txt_MessageID.Clear();
+            txt_Sender.Clear();
+            txt_Subject.Clear();
+            txt_MessageBody.Clear();
         }
     }
 }

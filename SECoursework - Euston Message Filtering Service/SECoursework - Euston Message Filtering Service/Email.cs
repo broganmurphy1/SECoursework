@@ -15,9 +15,9 @@ namespace SECoursework___Euston_Message_Filtering_Service
     [DataContract]
     public class Email : Message
     {
-        [DataMember]
+        [DataMember(Name = "Sender")]
         public string Sender { get; set; }
-        [DataMember]
+        [DataMember(Name = "Subject")]
         public string Subject { get; set; }
         public Email (string messageid, string messagebody, string sender, string subject) : base (messageid, messagebody)
         {

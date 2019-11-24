@@ -13,9 +13,9 @@ namespace SECoursework___Euston_Message_Filtering_Service
     [DataContract]
     public class Message
     {
-        [DataMember]
+        [DataMember(Name ="Message ID")]
         public string MessageID { get; set; }
-        [DataMember]
+        [DataMember(Name ="Message Body")]
         public string MessageBody { get; set; }
 
         public Message(string messageid, string messagebody)
