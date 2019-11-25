@@ -19,10 +19,12 @@ namespace SECoursework___Euston_Message_Filtering_Service
         public string Sender { get; set; }
         [DataMember(Name = "Subject")]
         public string Subject { get; set; }
-        public Email (string messageid, string messagebody, string sender, string subject) : base (messageid, messagebody)
+        public Email (string messageid, string sender, string subject, string messagebody) : base (messageid, messagebody)
         {
+            MessageID = messageid;
             Sender = sender;
             Subject = subject;
+            MessageBody = messagebody;
         }
 
         public static bool CheckEmailFormat(string eAddress)
@@ -78,7 +80,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
 
         public override string ToString()
         {
-            return string.Format("{0}, \n{1}, \n{2}, \n{3}", MessageID, Sender, Subject, MessageBody);
+            return string.Format("{0}, {1}, {2}, {3}", MessageID, Sender, Subject, MessageBody);
         }
     }
 }

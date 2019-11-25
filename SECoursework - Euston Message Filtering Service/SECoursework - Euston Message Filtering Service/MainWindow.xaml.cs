@@ -36,6 +36,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
 
         private void btn_ProcessEmail_Click(object sender, RoutedEventArgs e)
         {
+            btn_View.IsEnabled = true;
             try
             {
                 if (Email.CheckID(txt_MessageID.Text) && (txt_MessageID.Text != "") && (Regex.IsMatch(txt_MessageID.Text[0].ToString(), @"^[Ee]+$")))
@@ -52,7 +53,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
                                 Email.CheckIfURL(txt_MessageBody.Text, ref quarantineList);
 
                                 List<Email> email = new List<Email>();
-                                email.Add(new Email(txt_MessageID.Text, txt_MessageBody.Text, txt_Sender.Text, txt_Subject.Text));
+                                email.Add(new Email(txt_MessageID.Text,txt_Sender.Text, txt_Subject.Text, txt_MessageBody.Text));
 
                                 string json = JsonConvert.SerializeObject(email.ToArray());
 
@@ -97,39 +98,48 @@ namespace SECoursework___Euston_Message_Filtering_Service
 
         private void btn_View_Click(object sender, RoutedEventArgs e)
         {
-            //lst_DisplayMessages.Items.Clear();
             List<Email> Emails = new List<Email>();
             List<string> JSONMessageList = File.ReadAllLines(filePath).ToList();
             foreach (string message in JSONMessageList)
             {
-                string[] splitMessages = message.Split(',');
-
-                Email email = new Email(splitMessages[2], splitMessages[0], splitMessages[1], splitMessages[3]);
-
-                Emails.Add(email);
-
-                foreach (Email emailMessage in Emails)
+                lst_DisplayMessages.Items.Clear();
+                try
                 {
-                    lst_DisplayMessages.Items.Add(emailMessage.ToString());
+                    string[] splitMessages = message.Split(',');
+
+                    Email email = new Email(splitMessages[0], splitMessages[1], splitMessages[2], splitMessages[3]);
+
+                    Emails.Add(email);
+                    foreach (Email emailMessage in Emails)
+                    {
+                        lst_DisplayMessages.Items.Add(emailMessage);
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show("File empty");
                 }
             }
         }
 
         private void btn_DeleteMessage_Click(object sender, RoutedEventArgs e)
         {
-            if (lst_DisplayMessages.SelectedIndex > -1)
-            {
-                lst_DisplayMessages.Items.RemoveAt(lst_DisplayMessages.SelectedIndex);
-                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+            btn_View.IsEnabled = false;
+                if (lst_DisplayMessages.SelectedIndex > -1)
                 {
-                    using (TextWriter tw = new StreamWriter(fs))
-                        foreach (var item in lst_DisplayMessages.Items)
-                            tw.WriteLine(item);
+                    lst_DisplayMessages.Items.RemoveAt(lst_DisplayMessages.SelectedIndex);
+                    using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                    {
+                        using (TextWriter tw = new StreamWriter(fs))
+                            foreach (var item in lst_DisplayMessages.Items)
+                                tw.WriteLine(item);
+                    }
                 }
-            }
 
-            if (lst_DisplayMessages.SelectedIndex >= 0)
-                lst_DisplayMessages.Items.RemoveAt(lst_DisplayMessages.SelectedIndex);
+                if (lst_DisplayMessages.SelectedIndex >= 0)
+                    lst_DisplayMessages.Items.RemoveAt(lst_DisplayMessages.SelectedIndex);
+           
         }
 
         private void clearTextBoxes()
