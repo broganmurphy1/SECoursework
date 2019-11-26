@@ -25,7 +25,9 @@ namespace SECoursework___Euston_Message_Filtering_Service
     /// </summary>
     public partial class MainWindow : Window
     {
+        public List<string> sirList = new List<string>();
         public List<string> quarantineList = new List<string>();
+        //public List<string> sirList = new List<string>();
         MemoryStream memorystream1 = new MemoryStream();
         string filePath = @"E:\Uni\JSONSave.txt";
 
@@ -49,7 +51,8 @@ namespace SECoursework___Euston_Message_Filtering_Service
                             {
                                 lst_Quarantine.Items.Clear();
                                 quarantineList.Clear();
-                                
+
+                                checkIfSIR(txt_Subject.Text, txt_MessageBody.Text);
                                 Email.CheckIfURL(txt_MessageBody.Text, ref quarantineList);
 
                                 List<Email> email = new List<Email>();
@@ -148,6 +151,40 @@ namespace SECoursework___Euston_Message_Filtering_Service
             txt_Sender.Clear();
             txt_Subject.Clear();
             txt_MessageBody.Clear();
+        }
+
+        private static bool checkIfSIR(string subject, string messagebody)
+        {
+            Regex dateRegex = new Regex(@"(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$");
+            Regex sportCentreCodeRegex = new Regex(@"[0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9]$");
+
+            PopulateSir
+            if (subject.StartsWith("SIR") && (subject.EndsWith(dateRegex.IsMatch(subject).ToString())))
+            {
+                if (messagebody.StartsWith("Sport Centre Code") && 
+                    (messagebody.Contains(sportCentreCodeRegex.IsMatch(messagebody).ToString()) && 
+                    messagebody.Contains("Nature of Incident") &&
+                    (sirList.Contains(messagebody))))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void PopulateSirList(ref List<string> sList)
+        {
+            sirList.Add("theftofproperties");
+            sirList.Add("staff attack");
+            sirList.Add("device damage");
+            sirList.Add("raid");
+            sirList.Add("customer attack");
+            sirList.Add("staff abuse");
+            sirList.Add("bomb threat");
+            sirList.Add("terrorism");
+            sirList.Add("suspicious incident");
+            sirList.Add("sport injury");
+            sirList.Add("personal info leak");
         }
     }
 }
