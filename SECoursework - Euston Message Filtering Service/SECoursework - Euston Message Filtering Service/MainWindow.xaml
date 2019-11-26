@@ -34,6 +34,8 @@
         <Button x:Name="btn_View" Content="View Messages" HorizontalAlignment="Left" Margin="528,342,0,0" VerticalAlignment="Top" Width="93" Click="btn_View_Click" RenderTransformOrigin="0.065,0.545"/>
         <ListBox x:Name="lst_DisplayMessages" HorizontalAlignment="Left" Height="269" Margin="433,51,0,0" VerticalAlignment="Top" Width="482"/>
         <Button x:Name="btn_DeleteMessage" Content="Delete Message" HorizontalAlignment="Left" Margin="698,342,0,0" VerticalAlignment="Top" Width="99" Click="btn_DeleteMessage_Click"/>
+        <ListBox x:Name="lst_SIR" HorizontalAlignment="Left" Height="150" Margin="1105,214,0,0" VerticalAlignment="Top" Width="328"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1105,192,0,0" TextWrapping="Wrap" Text="SIR List" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
