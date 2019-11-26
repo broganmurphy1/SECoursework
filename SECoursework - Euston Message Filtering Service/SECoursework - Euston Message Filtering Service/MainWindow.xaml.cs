@@ -27,8 +27,12 @@ namespace SECoursework___Euston_Message_Filtering_Service
     {
         public List<string> sirList = new List<string>();
         public List<string> quarantineList = new List<string>();
-        string filePath = @"E:\Uni\JSONSave.txt";
+        public List <string> abvList =  
 
+        string filePath = @"E:\Uni\JSONSave.txt";
+        string abvFilePath = @"E:\Uni\Abv.txt";
+        string expandDFilePath = @"E:\Uni\Expand.txt";
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -55,12 +59,12 @@ namespace SECoursework___Euston_Message_Filtering_Service
                                 Email.CheckIfURL(txt_MessageBody.Text, ref quarantineList);
 
                                 List<Email> email = new List<Email>();
-                                email.Add(new Email(txt_MessageID.Text,txt_Sender.Text, txt_Subject.Text, txt_MessageBody.Text));
-                                
+                                email.Add(new Email(txt_MessageID.Text, txt_Sender.Text, txt_Subject.Text, txt_MessageBody.Text));
+
                                 string json = JsonConvert.SerializeObject(email.ToArray());
 
                                 File.AppendAllText(filePath, json + Environment.NewLine);
-                               
+
                                 MessageBox.Show("Email added");
                                 clearTextBoxes();
                             }
@@ -83,7 +87,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
                 {
                     MessageBox.Show("ID not in correct format, must be 'E' following with nine numbers");
                 }
-        }
+            }
             catch
             {
                 MessageBox.Show("Please enter an input for all fields");
@@ -97,25 +101,34 @@ namespace SECoursework___Euston_Message_Filtering_Service
             {
                 string urlreplaced = url.Replace(url, "<URL Quarantined>");
             }
+            foreach (string url in txt_MessageBody.Text.Split(' '))
+            {
+                if (Regex.IsMatch(url, @"(http(s) ?://)?([\w-]+\.)+[\w-]+(/[\w- ;,./?%&=]*)?"))
+                {
+                    lst_Quarantine.Items.Add(url);
+                    int index = Array.IndexOf(txt_MessageBody.Text.Split(' '), url);
+                    txt_MessageBody.Text.Split(' ')[index] = "<URL Quarantined>";
+                }
+            }
         }
 
         private void btn_View_Click(object sender, RoutedEventArgs e)
         {
-            List<Email> Emails = new List<Email>();
+            List<Message> MessageList = new List<Message>();
             List<string> JSONMessageList = File.ReadAllLines(filePath).ToList();
-            foreach (string message in JSONMessageList)
+            foreach (string messages in JSONMessageList)
             {
                 lst_DisplayMessages.Items.Clear();
                 try
                 {
-                    string[] splitMessages = message.Split(',');
+                    string[] splitMessages = messages.Split(',');
 
-                    Email email = new Email(splitMessages[0], splitMessages[1], splitMessages[2], splitMessages[3]);
+                    Message message = new Message(splitMessages[0], splitMessages[1], splitMessages[2], splitMessages[3]);
 
-                    Emails.Add(email);
-                    foreach (Email emailMessage in Emails)
+                    MessageList.Add(message);
+                    foreach (Message newMessage in MessageList)
                     {
-                        lst_DisplayMessages.Items.Add(emailMessage);
+                        lst_DisplayMessages.Items.Add(newMessage);
                     }
                 }
                 catch
@@ -141,7 +154,6 @@ namespace SECoursework___Euston_Message_Filtering_Service
 
                 if (lst_DisplayMessages.SelectedIndex >= 0)
                     lst_DisplayMessages.Items.RemoveAt(lst_DisplayMessages.SelectedIndex);
-           
         }
 
         private void clearTextBoxes()
@@ -152,7 +164,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
             txt_MessageBody.Clear();
         }
 
-        public static bool checkIfSIR(string subject, string messagebody, ref List<string> sList)
+        public bool checkIfSIR(string subject, string messagebody, ref List<string> sList)
         {
             Regex dateRegex = new Regex(@"(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$");
             Regex sportCentreCodeRegex = new Regex(@"[0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9]");
@@ -165,6 +177,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
                     {
                         if(messagebody.Contains(incident))
                         {
+                            lst_SIR.Items.Add(messagebody);
                             return true;
                         }
                     } 
@@ -186,6 +199,70 @@ namespace SECoursework___Euston_Message_Filtering_Service
             sList.Add("suspicious incident");
             sList.Add("sport injury");
             sList.Add("personal info leak");
+        }
+
+        private void btn_DeleteSIR_Click(object sender, RoutedEventArgs e)
+        {
+            lst_SIR.Items.RemoveAt(lst_SIR.SelectedIndex);
+        }
+
+        private void btn_ProcessSMS_Click(object sender, RoutedEventArgs e)
+        {
+            
+            try
+            {
+                if (SMS.CheckID(txt_MessageID.Text) && (txt_MessageID.Text != "") && (Regex.IsMatch(txt_MessageID.Text[0].ToString(), @"^[Ss]+$")))
+                {
+                    if (SMS.CheckNumberFormat(txt_Sender.Text) && (txt_Sender.Text != ""))
+                    {
+                        if (SMS.CheckBodyLength(txt_MessageBody.Text) && (txt_MessageBody.Text != ""))
+                        {
+                            if (txt_Subject.Text == "")
+                            {
+                                lst_Quarantine.Items.Clear();
+                                quarantineList.Clear();
+
+                                List<SMS> sms = new List<SMS>();
+                                sms.Add(new SMS(txt_MessageID.Text, txt_Sender.Text, "N/A", txt_MessageBody.Text));
+
+                                string json = JsonConvert.SerializeObject(sms.ToArray());
+
+                                File.AppendAllText(filePath, json + Environment.NewLine);
+
+                                MessageBox.Show("SMS added");
+                                clearTextBoxes();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Cannot have subject for this type of message");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Body must be under or equal 140 characters and not empty");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Phone number not in correct format");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("ID not in correct format, must be 'S' following with nine numbers");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("SMS not in correct format");
+            }
+        }
+
+
+
+        private void btn_ProcessTweet_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

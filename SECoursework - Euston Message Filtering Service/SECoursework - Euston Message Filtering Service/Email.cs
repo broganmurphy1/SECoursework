@@ -15,11 +15,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
     [DataContract]
     public class Email : Message
     {
-        [DataMember(Name = "Sender")]
-        public string Sender { get; set; }
-        [DataMember(Name = "Subject")]
-        public string Subject { get; set; }
-        public Email (string messageid, string sender, string subject, string messagebody) : base (messageid, messagebody)
+        public Email(string messageid, string sender, string subject, string messagebody) : base(messageid, sender, subject, messagebody)
         {
             MessageID = messageid;
             Sender = sender;
@@ -60,16 +56,16 @@ namespace SECoursework___Euston_Message_Filtering_Service
             }
         }
 
-        public static void CheckIfURL (string body, ref List<string> qList)
+        public static void CheckIfURL(string body, ref List<string> qList)
         {
             MainWindow mainWindow = new MainWindow();
-            
+
             foreach (string url in body.Split(' '))
             {
                 if (Regex.IsMatch(url, @"(http(s) ?://)?([\w-]+\.)+[\w-]+(/[\w- ;,./?%&=]*)?"))
                 {
                     qList.Add(url);
-                }            
+                }
             }
             foreach (string link in qList)
             {
@@ -77,7 +73,6 @@ namespace SECoursework___Euston_Message_Filtering_Service
                 body = replaceUrl;
             }
         }
-
         public override string ToString()
         {
             return string.Format("{0}, {1}, {2}, {3}", MessageID, Sender, Subject, MessageBody);

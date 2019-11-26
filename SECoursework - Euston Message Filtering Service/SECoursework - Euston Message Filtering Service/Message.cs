@@ -15,12 +15,18 @@ namespace SECoursework___Euston_Message_Filtering_Service
     {
         [DataMember(Name ="Message ID")]
         public string MessageID { get; set; }
-        [DataMember(Name ="Message Body")]
+        [DataMember(Name ="Sender")]
+        public string Sender { get; set; }
+        [DataMember(Name = "Subject")]
+        public string Subject { get; set; }
+        [DataMember(Name = "Message Body")]
         public string MessageBody { get; set; }
 
-        public Message(string messageid, string messagebody)
+        public Message(string messageid, string sender, string subject ,string messagebody)
         {
             MessageID = messageid;
+            Sender = subject;
+            Subject = subject;
             MessageBody = messagebody;
         }
 
@@ -52,7 +58,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
 
         public override string ToString()
         {
-            return string.Format("{0} - {1}", "You have entered", MessageID);
+            return string.Format("{0}, {1}, {2}, {3}", MessageID, Sender, Subject, MessageBody);
         }
     }
 }
