@@ -40,7 +40,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
             BodyFinished = ReplaceWord(BodyOriginal, aList, eList);
         }
 
-        public static bool CheckTwitterId(string sender)
+        public static bool CheckTwitterId(string sender) //checks if ID is less than or equal to 16 characters and first character is "@"
         {
             if (sender.Length <= 16 && (Regex.IsMatch(sender[0].ToString(), @"^[@]+$")))
             {
@@ -52,7 +52,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
             }
         }
 
-        public static bool CheckBodyLength(string messagebody)
+        public static bool CheckBodyLength(string messagebody) //checks message body so that it must be less than or equal to 140 characters
         {
             if (messagebody.Length <= 140)
             {
@@ -64,7 +64,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
             }
         }
 
-        public static void CheckIfHashtag(string body, ref List<string> hashList)
+        public static void CheckIfHashtag(string body, ref List<string> hashList) //checks each word in message body, if word is hashtag add it to list
         {
             foreach (string word in body.Split(' '))
             {
@@ -75,7 +75,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
             }
         }
 
-        public static void CheckIfMention(string body, ref List<string> mentionList)
+        public static void CheckIfMention(string body, ref List<string> mentionList)//checks each word in message body, if word is mention add it to list
         {
             foreach (string word in body.Split(' '))
             {
