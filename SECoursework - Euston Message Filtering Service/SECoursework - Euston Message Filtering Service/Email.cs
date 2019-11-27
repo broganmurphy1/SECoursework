@@ -58,8 +58,6 @@ namespace SECoursework___Euston_Message_Filtering_Service
 
         public static void CheckIfURL(string body, ref List<string> qList)
         {
-            MainWindow mainWindow = new MainWindow();
-
             foreach (string url in body.Split(' '))
             {
                 if (Regex.IsMatch(url, @"(http(s) ?://)?([\w-]+\.)+[\w-]+(/[\w- ;,./?%&=]*)?"))

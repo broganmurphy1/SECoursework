@@ -40,7 +40,10 @@
         <Button x:Name="btn_DeleteMessage" Content="Delete Message" HorizontalAlignment="Left" Margin="698,342,0,0" VerticalAlignment="Top" Width="99" Click="btn_DeleteMessage_Click" Height="22"/>
         <ListBox x:Name="lst_SIR" HorizontalAlignment="Left" Height="150" Margin="1051,230,0,0" VerticalAlignment="Top" Width="342"/>
         <TextBlock HorizontalAlignment="Left" Margin="1051,201,0,0" TextWrapping="Wrap" Text="SIR List" VerticalAlignment="Top" Height="16" Width="38"/>
-        <Button x:Name="btn_DeleteSIR" Content="Delete SIR" HorizontalAlignment="Left" Margin="1051,410,0,0" VerticalAlignment="Top" Width="75" Click="btn_DeleteSIR_Click" Height="22"/>
+        <ListBox x:Name="lst_Hashtags" HorizontalAlignment="Left" Height="150" Margin="1051,432,0,0" VerticalAlignment="Top" Width="342"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1051,411,0,0" TextWrapping="Wrap" Text="Hashtags" VerticalAlignment="Top"/>
+        <ListBox x:Name="lst_Mentions" HorizontalAlignment="Left" Height="150" Margin="1051,646,0,0" VerticalAlignment="Top" Width="342"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1051,625,0,0" TextWrapping="Wrap" Text="Mentions" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

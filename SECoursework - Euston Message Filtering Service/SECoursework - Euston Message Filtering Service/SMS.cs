@@ -14,23 +14,35 @@ namespace SECoursework___Euston_Message_Filtering_Service
     {
        public string BodyFinished { get; set; }     
        public string [] BodyOriginal { get; set; }
-       
-        public abvArray
-        public SMS (string messageid, string sender, string subject, string messagebody) : base(messageid, sender, subject, messagebody)
+       private string messageBody;
+
+       public override string MessageBody
+        {
+            get
+            {
+                return BodyFinished;
+            }
+            set
+            {
+                messageBody = value;
+            }
+        }
+
+        public SMS (string messageid, string sender, string subject, string messagebody, List<string> abvList, List<string> expList ) : base(messageid, sender, subject, messagebody)
         {
             MessageID = messageid;
             Sender = sender;
             Subject = subject;
             MessageBody = messagebody;
             BodyOriginal = messagebody.Split(' ');
-            BodyFinished = replaceWord(BodyOriginal);
+            List<string> aList = abvList;
+            List<string> eList = expList;
+            BodyFinished = ReplaceWord(BodyOriginal, aList, eList);
         }
 
         public static bool CheckNumberFormat(string sender)
         {
-            if (Regex.IsMatch(sender, (@"\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|
-                                        2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|
-                                        4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$")))
+            if (sender != "")
             {
                 return true;
             }
@@ -51,36 +63,36 @@ namespace SECoursework___Euston_Message_Filtering_Service
             }
         }
 
-        public static string ReplaceWord(string [] arrayofbody) 
+        public static string ReplaceWord(string [] arrayofbody, List<string> ablist, List<string> exlist) 
         {
             string answer = "";
 
             foreach(string word in arrayofbody)
             {
                 int indexOfWord = Array.IndexOf(arrayofbody, word); //creating index of each word that will be changed
-                arrayofbody[indexOfWord] = ConvertTxtSpeech(word);
+                arrayofbody[indexOfWord] = ConvertTxtSpeech(word, ablist, exlist);
             }
             answer = string.Join(" ", arrayofbody);
             return answer;
         }
 
-        public static string ConvertTxtSpeech(string sentWord)
+        public static string ConvertTxtSpeech(string sentWord, List<string> abvlist, List<string> explist)
         {
-            if(abvArray.Contains(sentWord))
-            {
-                int abvIndex = abvArray.IndexOf(sentWord);
-                string changedWord = sentWord + "<" + expArray[abvIndex] + ">";
-                return changedWord;
-            }
-            else
-            {
-                return sentWord;
-            }
+                if (abvlist.Contains(sentWord))
+                {
+                    int abvIndex = abvlist.IndexOf(sentWord);
+                    string changedWord = sentWord + "<" + explist[abvIndex] + ">";
+                    return changedWord;
+                }
+                else
+                {
+                    return sentWord;
+                }
         }
 
         public override string ToString()
         {
-            return string.Format("{0}, {1}, {2}, {3}", MessageID, Sender, Subject, BodyFinished);
+            return string.Format("{0}, {1}, {2}, {3}", MessageID, Sender, Subject, MessageBody);
         }
     }
 }

@@ -27,11 +27,16 @@ namespace SECoursework___Euston_Message_Filtering_Service
     {
         public List<string> sirList = new List<string>();
         public List<string> quarantineList = new List<string>();
-        public List <string> abvList =  
 
         string filePath = @"E:\Uni\JSONSave.txt";
-        string abvFilePath = @"E:\Uni\Abv.txt";
-        string expandDFilePath = @"E:\Uni\Expand.txt";
+        static string abvFilePath = @"E:\Uni\Abv.txt";
+        static string expandFilePath = @"E:\Uni\Expand.txt";
+
+        public List<string> abvList = File.ReadAllLines(abvFilePath).ToList();
+        public List<string> expandList = File.ReadAllLines(expandFilePath).ToList();
+
+        public List<string> hashtagList = new List<string>();
+        public List<string> mentionsList = new List<string>();
         
         public MainWindow()
         {
@@ -97,19 +102,19 @@ namespace SECoursework___Euston_Message_Filtering_Service
             {
                 lst_Quarantine.Items.Add(link);
             }
-            foreach (string url in quarantineList)
-            {
-                string urlreplaced = url.Replace(url, "<URL Quarantined>");
-            }
-            foreach (string url in txt_MessageBody.Text.Split(' '))
-            {
-                if (Regex.IsMatch(url, @"(http(s) ?://)?([\w-]+\.)+[\w-]+(/[\w- ;,./?%&=]*)?"))
-                {
-                    lst_Quarantine.Items.Add(url);
-                    int index = Array.IndexOf(txt_MessageBody.Text.Split(' '), url);
-                    txt_MessageBody.Text.Split(' ')[index] = "<URL Quarantined>";
-                }
-            }
+            //foreach (string url in quarantineList)
+            //{
+            //    string urlreplaced = url.Replace(url, "<URL Quarantined>");
+            //}
+            //foreach (string url in txt_MessageBody.Text.Split(' '))
+            //{
+            //    if (Regex.IsMatch(url, @"(http(s) ?://)?([\w-]+\.)+[\w-]+(/[\w- ;,./?%&=]*)?"))
+            //    {
+            //        lst_Quarantine.Items.Add(url);
+            //        int index = Array.IndexOf(txt_MessageBody.Text.Split(' '), url);
+            //        txt_MessageBody.Text.Split(' ')[index] = "<URL Quarantined>";
+            //    }
+            //}
         }
 
         private void btn_View_Click(object sender, RoutedEventArgs e)
@@ -223,7 +228,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
                                 quarantineList.Clear();
 
                                 List<SMS> sms = new List<SMS>();
-                                sms.Add(new SMS(txt_MessageID.Text, txt_Sender.Text, "N/A", txt_MessageBody.Text));
+                                sms.Add(new SMS(txt_MessageID.Text, txt_Sender.Text, "N/A", txt_MessageBody.Text, abvList, expandList));
 
                                 string json = JsonConvert.SerializeObject(sms.ToArray());
 
@@ -258,11 +263,67 @@ namespace SECoursework___Euston_Message_Filtering_Service
             }
         }
 
-
-
         private void btn_ProcessTweet_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (SMS.CheckID(txt_MessageID.Text) && (txt_MessageID.Text != "") && (Regex.IsMatch(txt_MessageID.Text[0].ToString(), @"^[Tt]+$")))
+                {
+                    if (Tweet.CheckTwitterId(txt_Sender.Text) && (txt_Sender.Text != ""))
+                    {
+                        if (Tweet.CheckBodyLength(txt_MessageBody.Text) && (txt_MessageBody.Text != ""))
+                        {
+                            if (txt_Subject.Text == "")
+                            {
+                                lst_Quarantine.Items.Clear();
+                                quarantineList.Clear();
 
+                                Tweet.CheckIfHashtag(txt_MessageBody.Text, ref hashtagList);
+                                Tweet.CheckIfMention(txt_MessageBody.Text, ref mentionsList);
+                                
+                                List<Tweet> tweet = new List<Tweet>();
+                                tweet.Add(new Tweet(txt_MessageID.Text, txt_Sender.Text, "N/A", txt_MessageBody.Text, abvList, expandList));
+
+                                string json = JsonConvert.SerializeObject(tweet.ToArray());
+
+                                File.AppendAllText(filePath, json + Environment.NewLine);
+
+                                MessageBox.Show("Tweet added");
+                                clearTextBoxes();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Cannot have subject for this type of message");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Body must be under or equal 140 characters and not empty");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Twitter ID not in correct format");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("ID not in correct format, must be 'T' following with nine numbers");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Tweet not in correct format");
+            }
+            
+            foreach (string hashtag in hashtagList)
+            {
+                lst_Hashtags.Items.Add(hashtag);
+            }
+            foreach (string mention in mentionsList)
+            {
+                lst_Mentions.Items.Add(mention);
+            }
         }
     }
 }

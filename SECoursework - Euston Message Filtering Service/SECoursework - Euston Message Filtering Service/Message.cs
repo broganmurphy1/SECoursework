@@ -20,12 +20,12 @@ namespace SECoursework___Euston_Message_Filtering_Service
         [DataMember(Name = "Subject")]
         public string Subject { get; set; }
         [DataMember(Name = "Message Body")]
-        public string MessageBody { get; set; }
+        public virtual string MessageBody { get; set; }
 
         public Message(string messageid, string sender, string subject ,string messagebody)
         {
             MessageID = messageid;
-            Sender = subject;
+            Sender = sender;
             Subject = subject;
             MessageBody = messagebody;
         }
