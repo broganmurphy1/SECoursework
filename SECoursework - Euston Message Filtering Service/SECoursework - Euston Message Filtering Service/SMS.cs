@@ -40,17 +40,6 @@ namespace SECoursework___Euston_Message_Filtering_Service
             BodyFinished = ReplaceWord(BodyOriginal, aList, eList);
         }
 
-        public static bool CheckNumberFormat(string sender)
-        {
-            if (sender != "")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
         public static bool CheckBodyLength(string messagebody)
         {
             if(messagebody.Length <= 140)

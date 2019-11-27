@@ -218,7 +218,7 @@ namespace SECoursework___Euston_Message_Filtering_Service
             {
                 if (SMS.CheckID(txt_MessageID.Text) && (txt_MessageID.Text != "") && (Regex.IsMatch(txt_MessageID.Text[0].ToString(), @"^[Ss]+$")))
                 {
-                    if (SMS.CheckNumberFormat(txt_Sender.Text) && (txt_Sender.Text != ""))
+                    if (txt_Sender.Text.Length == 11 && (txt_Sender.Text != "") && (CheckSMSNumForDigits(txt_Sender.Text)))
                     {
                         if (SMS.CheckBodyLength(txt_MessageBody.Text) && (txt_MessageBody.Text != ""))
                         {
@@ -324,6 +324,16 @@ namespace SECoursework___Euston_Message_Filtering_Service
             {
                 lst_Mentions.Items.Add(mention);
             }
+        }
+        public bool CheckSMSNumForDigits(string sender)
+        {
+            long parsedValue;
+            if (Int64.TryParse(txt_Sender.Text, out parsedValue))
+            {
+                return true;
+            }
+            else
+                return false;
         }
     }
 }
